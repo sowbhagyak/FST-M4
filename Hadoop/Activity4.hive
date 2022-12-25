@@ -1,0 +1,20 @@
+-- create a table
+CREATE TABLE files (line STRING);
+
+--load data into table
+LOAD DATA LOCAL INPATH '/root/file01.txt' INTO TABLE files;
+
+--Create a new table using data from the files table
+CREATE TABLE word_counts AS
+      > SELECT word, count(1) AS count FROM
+      > (SELECT explode(split(line, ' ')) AS word FROM files) w
+      > GROUP BY word
+      > ORDER BY word;
+
+-- run queries on table
+SELECT * FROM word_count;
+Bye,1
+Goodbye,1
+Hadoop,2
+Hello,2
+World,2
